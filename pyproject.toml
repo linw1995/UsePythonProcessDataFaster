@@ -1,0 +1,26 @@
+[project]
+name = ""
+version = ""
+description = ""
+authors = [
+    {name = "林玮 (Jade Lin)", email = "linw1995@icloud.com"},
+]
+dependencies = [
+    "requests~=2.26",
+    "httpx~=0.19",
+    "jsonpath-extractor~=0.8",
+    "data-extractor~=0.10",
+]
+requires-python = ">=3.9"
+dynamic = ["classifiers"]
+license = {text = "MIT"}
+
+[project.urls]
+homepage = ""
+
+[build-system]
+requires = ["pdm-pep517"]
+build-backend = "pdm.pep517.api"
+
+[tool]
+[tool.pdm]
