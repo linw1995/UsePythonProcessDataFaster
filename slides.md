@@ -539,7 +539,7 @@ for world in ["apple", "apple", "banana"]:
 print(order)
 ```
 
-> 这个还可以通过 dict 来做（dict 在3.7之后，是保留插入顺序，即遍历的顺序与插入的相同）
+> 这个还可以通过 dict 来做（dict 在3.6之后，是保留插入顺序，即遍历的顺序与插入的相同）
 ```python
 print(dict.fromkeys(["apple", "apple", "banana"]).keys())
 ```
