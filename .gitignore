@@ -3,3 +3,7 @@
 
 # Python Virtual Environment
 venv
+
+# Python PDM
+.pdm.toml
+__pypackages__
