@@ -801,7 +801,8 @@ def fetch_hot_topics():
 #### JSONPath 通过 CLI 查询例子
 
 ```bash
-http GET https://www.v2ex.com/api/topics/hot.json > ./assets/hot.json
+# 获取最新数据
+# http GET https://www.v2ex.com/api/topics/hot.json > ./assets/hot.json
 
 jp '$[*].title' -f ./assets/hot.json
 ```
@@ -826,6 +827,7 @@ def fetch_hot_topics():
 
 class Topic(Item):
     title = F(J("title"))
+    url = F(J("url"))
     author = F(J("member.username"))
     topic_name = F(J("node.title"))
 
@@ -834,9 +836,35 @@ pprint(Topic(J("$[*]"), is_many=True).extract(fetch_hot_topics()))
 
 ---
 
-# 小作业
+### 数据导出 -- 小作业
+
+通过本讲的这些知识点，你们能把 v2ex 的热门话题输出成 CSV 表格吗？
+
+按以下需求，分别输出两份文件
+
+1. 按话题名称排序
+2. 根据最后更新时间从近到旧排序
+
+---
 
 # 推荐阅读
+
+本讲从处理数据的角度出发，略过了大量的 Python 知识，推荐想深入学习的伙伴们阅读以下内容
+
+## Python Cookbook 第三版
+
+有大量的实践案例，十分适合当作工具书
+
+- 1 数据结构和算法
+- 2 字符串和文本
+- 3 数字、日期和时间
+- 5.1 读写文本数据
+- 6.1 读写 CSV 数据
+- 6.2 读写 JSON 数据
+
+## [Python编程快速上手](https://automatetheboringstuff.com/)
+
+阅读这本书并实践，能较快速地上手 Python 编程。（有中文版书籍)
 
 ---
 
