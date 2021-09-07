@@ -56,7 +56,13 @@ arr = [1, 2, 3, arr, None, 1.2]
 print(arr)
 ```
 
-> 按下 `ctrl+e` 可执行代码块
+> 按下 `ctrl+e` 可执行代码块。
+
+> `arr = []` 为赋值语句 Assignment statement，
+> 其中的 `arr` 为变量 Variable，`[]` 为字面量 Literal。
+
+> `print(arr)` 为调用语句 call statement，
+> 其中的 `print` 是变量，其类型是函数，作用是输出传入参数到标准输出流，即显示 `arr` 变量的值。
 
 ---
 
@@ -73,6 +79,13 @@ print(arr)
 arr = list(range(5)) # list() 空数组
 print(arr)
 ```
+
+> 数组推导式 list comprehension，一种语法糖。比如 `arr = [i for i in range(10)]` 等同于以下代码
+
+```python
+arr = []
+for i in range(10):
+    arr.append(i)
 
 ---
 
@@ -96,6 +109,22 @@ for x in arr:
 for idx, x in enumerate(arr):
     print(idx, x)
 ```
+
+> 只有可迭代 Iterable 对象可以通过 **for-in** 遍历，比如 list dict 等
+> `enumerate` 是个生成器创建函数。生成器 Generator 的优点是懒执行，只有遍历到了才会给出当前的下标
+> 等同一下代码，定义了个 `enumerate` 的生成器函数
+
+```python
+def enumerate(iterable):
+    idx = 0
+    for value in iterable:
+        yield idx, value
+        idx += 1
+
+```
+
+> `yield` 关键字，会暂停函数的执行，把 `idx, value` 提供给 **for-in** 语句。
+> 直到 **for-in** 语句的代码块执行完之后，再继续执行函数。如此往复，直到 `iterable` 被遍历完
 
 ---
 
