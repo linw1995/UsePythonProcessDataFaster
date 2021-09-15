@@ -6,10 +6,22 @@
 
 ### 代码块执行环境安装
 
+通过 pdm 安装
+
 ```shell
 python3.9 -m venv --without-pip --clear venv
 source venv/bin/activate
+pdm config -l use_venv true
 pdm sync
+```
+
+或者直接通过 pip 安装
+
+```shell
+python3.9 -m venv --clear venv
+source venv/bin/activate
+pip install -U pip
+pip install .
 ```
 
 ### 播放幻灯片

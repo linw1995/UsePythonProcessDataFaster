@@ -1,6 +1,6 @@
 [project]
-name = ""
-version = ""
+name = "slides-environment"
+version = "0.0.1"
 description = ""
 authors = [
     {name = "林玮 (Jade Lin)", email = "linw1995@icloud.com"},
