@@ -9,6 +9,17 @@ paging: 第 %d / %d 页
 
 本讲旨在让 **Python** 初学者学会如何快速地处理文本数据
 
+~~~sh
+cfonts 'Hello' -c 'blue' -a center
+cfonts 'World' -c 'red' -a right
+cfonts 'Hello' -c 'yellow' -a center
+cfonts 'Python' -c 'blue' -a right
+~~~
+
+> 通过调整终端大小，从小往大调整，直至本页面将要变形，
+> 即可获得更好的阅读体验。
+> **MacOS** 可通过快捷键 `command` + `+/-` 来调整字体大小
+
 ---
 
 # 数据处理的的三大阶段

@@ -8,7 +8,9 @@ authors = [
 dependencies = [
     "httpx~=0.19",
     "jsonpath-extractor~=0.8",
-    "data-extractor~=0.10"]
+    "data-extractor~=0.10",
+    "python-cfonts~=1.5",
+]
 requires-python = ">=3.9"
 dynamic = ["classifiers"]
 
