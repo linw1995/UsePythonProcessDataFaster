@@ -15,5 +15,8 @@ pdm sync
 ### 播放幻灯片
 
 ```shell
+# 安装 slides 命令
+GO111MODULE=on go get -u github.com/maaslalani/slides/cmd
+# 播放幻灯片
 slides slides.md
 ```
