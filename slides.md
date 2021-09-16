@@ -305,6 +305,7 @@ for x in arr:
 # 遍历过程中同时获取元素的下标
 for idx, x in enumerate(arr):
     print(idx, x)
+
 ```
 
 > 只有可迭代 Iterable 对象可以通过 **for-in** 遍历，比如 list dict 等
@@ -332,6 +333,9 @@ arr = [1, 3, 2, 5, 4]
 # 等同 arr[:2]，获取下标为 0, 1 的元素
 # 相当于创建了一个新的数组，包含下标为 0，1 的元素
 print(arr[0:2])
+
+# 或者跳序访问
+print(arr[::2])
 
 # 还可以通过分片赋值来修改数组
 arr[0:2] = reversed(arr[0:2])
@@ -504,7 +508,7 @@ print(filtered_arr)
 
 ### 过滤数组中的元素
 
-复杂的过滤最好通过 for-in 语句去处理
+复杂的过滤最好通过 **for-in** + **if-else** 语句去处理
 
 ```python
 arr = [1, 3, 2, 5, 4]
