@@ -22,6 +22,24 @@ cfonts 'Python' -c 'blue' -a right
 
 ---
 
+# 安装使用 Python
+
+希望大家从官网 [python.org](https://www.python.org/downloads/) 上，下载安装一下 **Python**。
+
+一边随着幻灯片，一边通过实践来学习。
+
+原生 python repl 不太好用，推荐顺便安装下 [IPython](https://ipython.org/)。
+在终端运行 `pip install ipython` 即可安装，再通过 `ipython` 启用该 repl。
+
+> REPL -- Read–eval–print loop 就是我们输入，repl执行，再把结果输出给我们，如此反复。
+> 比如在 ipython 中键入以下代码，再按一下回车键，即可看到其输出 "hello world"。
+
+```python
+print('hello world')
+```
+
+---
+
 # 数据处理的的三大阶段
 
 可简单分为三个阶段
@@ -43,7 +61,182 @@ cfonts 'Python' -c 'blue' -a right
 
 # 数据处理
 
-再进入正题之前，先讲一下 **Python** 中常用的数据结构及用法。
+## 基本数据类型
+
+### 数值类型
+
+* `int` 整型，即整数像 `-1` `0` `1` `2` `3`。
+* `float` 浮点型，表示带小数部分的数字，像 `-1.0` `0.1` `.3` 。
+  无论是计算还是存储，遇到 float 都需要考虑精度的问题。
+* `decimal.Decimal` 如果需要高精度的十进制浮点数计算，用它就没错了
+
+关于 `int` `float` 不用展开的讲，只提几个小知识点
+
+1. Python 中的 `int` 没有大小限制，不像需要编译的语言，大数计算需要用特定模块。
+2. 低精度的计算不用 `decimal` ，代码运行的速度会更块。
+    需要高精度的话，就一定要用 `decimal` 模块
+
+
+```python
+a = 1
+print(a)
+
+b = 1.0
+print(b)
+```
+
+> 按下 `ctrl+e` 可执行代码块。
+
+> `a = 1` 及 `b = 1.0` 为赋值语句 Assignment statement，
+> 其中的 `a`, `b` 为变量 Variable，`1`, `1.0` 为字面量 Literal。
+
+> `print(a)` 为调用语句 call statement，
+> 其中的 `print` 是变量，其类型是函数，作用是输出传入参数到标准输出流，即显示 `a` 变量的值。
+
+
+---
+
+## 基本数据类型
+
+### 数值类型
+
+#### Decimal
+
+```python
+from decimal import *
+
+a = Decimal('17.2')
+b = Decimal('17.4')
+
+c = b - a
+print(type(c), c)  # 调用 type 函数获取变量 c 的类型
+
+# 可与 int 进行数值计算，但与 float 不行（由于 float 不能保证自身精度）
+d = c * 30
+print(type(d), d)
+e = 1 / Decimal(3)
+print(type(e), e)
+
+# 修改上下文中的精度配置
+getcontext().prec = 6
+print("6:", Decimal(1) / Decimal(7))
+getcontext().prec = 28 # 默认值
+print("28", Decimal(1) / Decimal(7))
+```
+
+> `from decimal import *` 导入 `decimal` 模块到全局作用域。
+> 
+> 这样就可以通过直接通过 `Decimal('17.2')` 调用来做 `Decimal` 变量的构建。
+> 
+> `getcontext` 函数同样来自于 `decimal` 模块。
+> 
+> 如果不清楚变量的来源可以尝试用 `help(getcontext)` 函数查询。
+
+> 而如果用 `import decimal` 来导入 `decimal` 模块，
+> 则需要通过 `decimal.Decimal` 来调用 `Decimal` 构建。
+
+> 更多使用姿势可以见 [Decimal objects](https://docs.python.org/3/library/decimal.html#quick-start-tutorial)
+
+---
+
+### 字符串类型
+
+- `bytes` 字节数组，可以当作是元素只能为 `0` - `255` （一字节，八比特）的整型数组
+- `str` 字符串类型
+
+```python
+a = '字符串'
+b = b'\xe5\xad\x97\xe8\x8a\x82\xe6\x95\xb0\xe7\xbb\x84'
+
+# 向终端打印字符串很方便
+print("str:", a) # 即可
+
+# bytes 就很麻烦了，需要解码
+print("bytes:", b.decode('utf-8'))
+# 或者直接写入标准输出流
+import os
+
+os.write(1, b + b'\n\n')
+```
+
+> 直接写入标准输出流，反而会先输出。
+> 因为一般情况下， `print` 往标准输出流写入是会带缓冲的（可以看一下全全局变量 `sys.stdout` 的类型是什么）
+
+---
+
+### 字符串类型
+
+字符串类型为什么有 `str` 和 `bytes`，光 str 不行吗？回答这个问题之前，先了解一下编码
+
+#### 编码
+
+编码其实就是储存字符的一种方式，比如最简单的 [**ascii**](https://zh.wikipedia.org/wiki/ASCII) 用 `97` 来代表字符 `'a'`。 
+比如直接数组 `bytes([97, 98, 99])` 就是 `b'abc'`。而 `str` 类型为 **Python** 中默认的字符串类型，以 **unicode** 进行编码，把字符串存储在内存中。
+
+**unicode** 为至今最大的一个编码集合，能涵盖所有字符（有趣的是 emoji 也包含在内）。
+
+```python
+# 通过不同的字面量写法，打印出同一个字符
+print('character name:','\N{rolling on the floor laughing}')
+print('charactor code:', '\U0001f923')
+```
+
+可以这么理解 **unicode** 为所有编码的超集，其他编码都能通过一定规则来转换成 **unicode** 编码。
+理所当然，这就该是默认的字符串类型。
+
+通过 `ord` 及 `chr` 可以进行编码与字符的转换。
+
+```python
+# str
+print(ord('🤣'), chr(129315))
+# one byte
+print(ord('a'.encode('ascii')), chr(97))
+```
+
+> 更多关于编码的知识，可以查看 [Unicode HOWTO](https://docs.python.org/3/howto/unicode.html)
+
+---
+
+### 字符串类型
+#### 字符串的输入输出
+
+字符串 str 用的是 **Python** 内部的编码方式，字符串的输出输入肯定是要做编码解码的。
+
+比如读取文件，保存文件，都要选择编码（默认 `"utf-8"`，是 **unicode** 的一种实现)。
+
+以下代码中 `encoding="utf-8"` 代表了输出所要执行编码类型 **utf-8**，`"w"` 代表要写入。
+（如果换成简单，字符集合小的 **ascii** 编码，以下代码就会抛出编码异常错误）
+
+```python
+with open("./assets/demo.txt", "w", encoding="utf-8") as f:
+    f.write('🤣')
+
+with open("./assets/demo.txt", "r", encoding="utf-8") as f:
+    print(f.read())
+```
+
+> 我们向标准输出流打印字符串的过程，也有在进行编码。
+> 所以在调用 `print` 函数的时候，也可能会越到编码错误。
+> 遇到这样的问题，一般更正一下终端的 locale 即可解决。
+
+
+- 执行 `locale -a` 查看所有可配置项
+- 修改当前的配置，通过变更环境变量 `LANG` 来变更编码。
+  比如执行以下代码会发现 **GB18030** 编码 emoji 产生了乱码
+
+```bash
+LANG=zh_CN.GB18030 python -c 'print("GB18030:", chr(129315))'
+LANG=en_US.UTF-8 python -c 'print("UTF-8:", chr(129315))'
+```
+
+---
+
+# 数据处理
+## 容器
+
+讲完了，数据处理中常用的基本类型。
+
+接下来讲一下 **Python** 中常用的容器及用法。
 
 * list 数组
 * dict 关联数组（字典）
@@ -62,18 +255,10 @@ cfonts 'Python' -c 'blue' -a right
 arr = []
 print(arr)
 
-# 中括号包裹变量也是数组，不限类型
+# 中括号包裹变量也是数组，不限元素类型
 arr = [1, 2, 3, arr, None, 1.2]
 print(arr)
 ```
-
-> 按下 `ctrl+e` 可执行代码块。
-
-> `arr = []` 为赋值语句 Assignment statement，
-> 其中的 `arr` 为变量 Variable，`[]` 为字面量 Literal。
-
-> `print(arr)` 为调用语句 call statement，
-> 其中的 `print` 是变量，其类型是函数，作用是输出传入参数到标准输出流，即显示 `arr` 变量的值。
 
 ---
 
@@ -811,7 +996,7 @@ http https://www.v2ex.com/api/topics/hot.json  | jq -C | less
 
 ## 工欲善其事，必先利其器
 
-寻找合适的轮子来应对，也是十分重要的
+寻找合适的轮子来应对，也是十分重要的。
 
 ### HTTP 客户端
 
@@ -906,6 +1091,10 @@ pprint(Topic(J("$[*]"), is_many=True).extract(fetch_hot_topics()))
 ## [Python编程快速上手](https://automatetheboringstuff.com/)
 
 阅读这本书并实践，能较快速地上手 Python 编程。（有中文版书籍)
+
+## 善用搜索引擎
+
+Python 有着大量的用户基数，有什么问题可以先搜一搜，一般都能找到答案。
 
 ---
 
